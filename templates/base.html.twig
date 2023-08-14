@@ -1,16 +1,149 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr" data-bs-theme="auto">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mon Livre">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+   <title>{% block title %} Mon livre -  {% endblock %}</title>
+ 
+    <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/laboutique.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
+{% block javascript %}
+{% endblock %}
+
+      <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/carousel.css')}}" rel="stylesheet">
+    
+  </head>
+
+
+  <body>
+        
+<header data-bs-theme="dark">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{ path('app_home')}}"> <img src="{{ asset('assets/img/logo1.png')}}"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('app_product')}}">Nos Produits</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Qui sommes nous</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ path('contact') }}">Contact</a>
+          </li>
+         </ul>
+        {# <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Votre recherche" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Rechercher</button>
+        </form> #}
+        <div class="navbar-item-custom">
+        {%if app.user %}
+        <a href="{{path('app_account')}}">Mon compte <small>({{ app.user.firstname}})</small> </a> | <a href="{{path('app_logout')}}">Déconnexion</a>
+        {% else %}
+        <a href="{{path('app_login')}}">Connexion </a> | <a href="{{path('app_register')}}"> Inscription</a>
+        {% endif %}
+        </div>
+
+        <a href="{{path('app_cart')}}">
+        <img src="{{asset('assets/img/shopping-cart.png')}}" class="cart-icon" alt="Mon panier">
+        </a>
+
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+{% if block('carousel') is defined %}
+  <div id="myCarousel" class="carousel slide mb-6" data-bs-ride="carousel" data-bs-theme="light">
+    <div class="carousel-indicators">
+    {% for key,header in headers %}
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ key }}" {% if key == 0 %} class="active" {% endif %} aria-current="true" aria-label="Slide 1"></button>
+
+    {% endfor %} 
+    </div>
+    <div class="carousel-inner">
+
+      {% for key,header in headers %}
+
+      <div class="carousel-item {% if key == 0 %} active {% endif %}" style="background: url('/uploads/{{ header.illustration }}');background-size:cover; background-position: center;"> 
+         <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>{{ header.title }}</h1>
+            {% autoescape false %}  
+            <p class="opacity-80"> {{ header.content| nl2br }} </p>
+            {% endautoescape %}
+            <br>
+            <p><a class="btn btn-lg btn-info" href="{{ header.btnUrl }}">{{ header.btnTitle}}</a></p>
+          </div>
+        </div>
+       </div> 
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+{% endif %}
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing {% if block('carousel') is not defined %}mt-5{% endif %}">
+
+   {% block content %}
+   {% endblock %}
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <footer class="footer-custom">
+    <div class="row">
+            <div class="col-md-12">
+       <p>&copy; 2017–2023 <i>Mon Livre </i>, <br>
+    &middot; <small> <a href="#">Privacy</a> &middot; <a href="#">Terms</a> </small> </p>
+            </div>
+  </div>
+  
+  </footer>
+</main>
+<script src="{{ asset('assets/js/bootstrap.bundle.js')}}"></script>
+
     </body>
 </html>
