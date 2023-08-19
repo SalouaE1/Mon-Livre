@@ -16,4 +16,5 @@ passer des commandes, et plus encore.
 -> Design responsive : Le site web est conçu pour fonctionner sur différents appareils et tailles d'écran.
 
 # Schéma de la Base de Données
+![schéma BD](https://github.com/SalouaE1/Mon-Livre/assets/139327537/fcd45fd6-478b-4ffb-8a11-bdc0a10bca95)
 
