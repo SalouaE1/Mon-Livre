@@ -47,9 +47,9 @@ class RegisterController extends AbstractController
                 $content = 'Bonjour '.$user->getFirstname().', <br> Bienvenue chez Mon Livre. <br> Votre compte vous donne accès à découvrir un large choix de livres de poche et à partager avec une communauté de lecteurs passionnés!';
 
                 $mail->send($user->getEmail(), $user->getFirstname(), "Confirmation d'inscription - Mon Livre", $content);
-                
+              
                 $notification = "Votre inscription s'est bien déroulée. vous pouvez dès à présent vous connecter à votre compte";
-
+                
             } else {
                 $notification = 'Cet email existe déjà';
 

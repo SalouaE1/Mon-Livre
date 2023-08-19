@@ -44,9 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class)]
     private Collection $orders;
 
-    #[ORM\Column(length: 50)]
-    private ?string $Pseudo = null;
-
+    
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
@@ -208,18 +206,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $order->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
-    {
-        return $this->Pseudo;
-    }
-
-    public function setPseudo(string $Pseudo): static
-    {
-        $this->Pseudo = $Pseudo;
 
         return $this;
     }
